@@ -18,6 +18,10 @@
     </form>
 
     <script>
+        function goToSearchPage() {
+            window.location.href = 'search.html';
+        }
+
         function validateSearch() {
         var searchTerm = document.getElementById('searchQuery').value;
 
@@ -39,7 +43,11 @@
             return false; // Prevent form submission
         }
 
-        window.location.href = 'search.html';
+        if(1=1){
+            goToSearchPage()
+        } 
+
+        // window.location.href = 'search.html';
         // return true; // Allow form submission
 
     }
