@@ -10,7 +10,6 @@
 
     <h1>Search Form</h1>
 
-    <!-- action="/search" method="GET" -->
     <form onsubmit="validateSearch(event)">
         <label for="searchQuery">Search:</label>
         <input type="text" id="searchQuery" name="q" placeholder="Enter your search query" required>
@@ -42,8 +41,7 @@
 
             sessionStorage.setItem('search', searchTerm);
             window.location.href = 'search.html';
-
-            // return true; // Allow form submission
+             // Allow form submission
 
         }
     </script>
