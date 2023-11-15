@@ -10,47 +10,42 @@
 
     <h1>Search Form</h1>
 
-    <form id="testform">
+    <!-- action="/search" method="GET" -->
+    <form onsubmit="validateSearch(event)">
         <label for="searchQuery">Search:</label>
         <input type="text" id="searchQuery" name="q" placeholder="Enter your search query" required>
-        <button type="submit" onclick="validateSearch()">Search</button>
-        <a href="search.html">Go to Search Page</a>
+        <button type="submit">Search</button>
     </form>
 
     <script>
-        function goToSearchPage() {
+        async function validateSearch(event) {
+            event.preventDefault();
+            var searchTerm = document.getElementById('searchQuery').value;
+
+            // Use a regular expression or any other validation logic to check for potential XSS
+            var xssPattern = /<script|<\/script|<img|<\/img|<svg|<\/svg/gi;
+            // Regular expression to check for SQL injection attempts
+            var sqlInjectionPattern = /SELECT|INSERT|UPDATE|DELETE|UNION|WHERE|AND|OR|FROM|DROP|TRUNCATE|TABLE|CREATE|ALTER|EXEC|SP_EXECUTESQL|EXECUTE|'|#|`|--|"|;|(\bOR\b\s=\s\b\d+\b)/gi;
+
+            if (xssPattern.test(searchTerm)) {
+                // Clear the search bar
+                document.getElementById('searchQuery').value = '';
+                return; // Prevent form submission
+            }
+
+            if (sqlInjectionPattern.test(searchTerm)) {
+                // Clear the search bar
+                document.getElementById('searchQuery').value = '';
+                //alert('SQL injection attempt detected. Please enter a valid search query.');
+                return; // Prevent form submission
+            }
+
+            sessionStorage.setItem('search', searchTerm);
             window.location.href = 'search.html';
+
+            // return true; // Allow form submission
+
         }
-
-        function validateSearch() {
-        var searchTerm = document.getElementById('searchQuery').value;
-
-        // Use a regular expression or any other validation logic to check for potential XSS
-        var xssPattern = /<script|<\/script|<img|<\/img|<svg|<\/svg/gi;
-        // Regular expression to check for SQL injection attempts
-        var sqlInjectionPattern = /SELECT|INSERT|UPDATE|DELETE|UNION|WHERE|AND|OR|FROM|DROP|TRUNCATE|TABLE|CREATE|ALTER|EXEC|SP_EXECUTESQL|EXECUTE|'|#|`|--|"|;|(\bOR\b\s=\s\b\d+\b)/gi;
-
-        if (xssPattern.test(searchTerm)) {
-            // Clear the search bar
-            document.getElementById('searchQuery').value = '';
-            return false; // Prevent form submission
-        }
-
-        if (sqlInjectionPattern.test(searchTerm)) {
-            // Clear the search bar
-            document.getElementById('searchQuery').value = '';
-            //alert('SQL injection attempt detected. Please enter a valid search query.');
-            return false; // Prevent form submission
-        }
-
-        if(1=1){
-            goToSearchPage()
-        } 
-
-        // window.location.href = 'search.html';
-        // return true; // Allow form submission
-
-    }
     </script>
 
 </body>

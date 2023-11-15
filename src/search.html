@@ -17,16 +17,17 @@
 
     <script>
 
+        const storedPassword = sessionStorage.getItem('search');    
+
         // Function to extract the search term from the URL parameters
-        function getSearchTerm() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('q');
-        }
+        // function getSearchTerm() {
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     return urlParams.get('q');
+        // }
 
         // Function to set the search term in the page
         function setSearchTerm() {
-            const searchTerm = getSearchTerm();
-            document.getElementById('searchTerm').innerText = searchTerm;
+            document.getElementById('searchTerm').innerText = storedPassword;
         }
 
         // Function to navigate back to the home page
